@@ -114,6 +114,8 @@ services:
     image: redis:7-alpine
     container_name: shine-redis
     command: ["redis-server", "--save", "", "--appendonly", "no"]
+    ports:
+      - "6379:6379"
     expose:
       - "6379"
     healthcheck:
