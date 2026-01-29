@@ -29,5 +29,5 @@ api-clear:
 	docker compose -f docker-compose.dev.yml exec api sh -lc "php artisan optimize:clear"
 
 app-bundle:
-	docker compose -f docker-compose.dev.yml exec app sh -lc "npm run build:bundle"
+	docker compose -f docker-compose.dev.yml run --rm app sh -lc "npm run build:bundle"
 
