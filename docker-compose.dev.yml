@@ -59,6 +59,35 @@ services:
       redis:
         condition: service_healthy
 
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: shine-queue
+    working_dir: /var/www/html
+    volumes:
+      - ../api-shineedu:/var/www/html
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: shineedu
+      DB_USERNAME: shineedu
+      DB_PASSWORD: shineedu
+      CACHE_STORE: redis
+      CACHE_DRIVER: redis
+      REDIS_CLIENT: predis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_DB: 0
+    command: ["php", "artisan", "queue:work", "--tries=3", "--timeout=90"]
+    depends_on:
+      - api
+      - db
+      - redis
+
   app:
     image: node:20-alpine
     container_name: shine-app
