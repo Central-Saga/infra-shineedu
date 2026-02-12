@@ -1,4 +1,4 @@
-# Sertifikat dari mkcert (trusted di sistem). Generate dulu: make certs
+# Sertifikat dari mkcert (trusted di browser). Generate dulu: make certs
 landing.shineeducationbali.test {
   tls /etc/caddy/certs/cert.pem /etc/caddy/certs/key.pem
   reverse_proxy landing:3001

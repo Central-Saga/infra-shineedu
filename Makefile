@@ -2,13 +2,9 @@ dev-up:
 	docker compose -f docker-compose.dev.yml up --build
 
 # Generate sertifikat mkcert (trusted di browser). Wajib dijalankan sekali sebelum dev-up.
-# Prasyarat: brew install mkcert
+# Di Windows/Git Bash: script otomatis unduh mkcert ke .certs/ bila belum ada.
 certs:
-	@command -v mkcert >/dev/null 2>&1 || (echo "Instal mkcert dulu: brew install mkcert" && exit 1)
-	mkdir -p .certs
-	mkcert -install
-	mkcert -cert-file .certs/cert.pem -key-file .certs/key.pem "*.shineeducationbali.test" "shineeducationbali.test"
-	@echo "Sertifikat berhasil dibuat di .certs/"
+	@bash scripts/setup-certs.sh
 
 dev-down:
 	docker compose -f docker-compose.dev.yml down -v
