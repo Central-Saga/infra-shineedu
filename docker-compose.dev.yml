@@ -49,7 +49,7 @@ services:
       [
         "sh",
         "-lc",
-        "composer install && php artisan key:generate --force || true && php artisan serve --host=0.0.0.0 --port=8000",
+        "composer install --no-scripts && ([ -f .env ] || cp .env.example .env) && (php artisan key:generate --force || true) && php artisan config:clear && php artisan cache:clear && php artisan serve --host=0.0.0.0 --port=8000",
       ]
     expose:
       - "8000"
