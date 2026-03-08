@@ -94,7 +94,11 @@ services:
     working_dir: /app
     volumes:
       - ../app-shineedu:/app
+      - /app/.next
+      - /app/node_modules
     environment:
+      NEXT_PUBLIC_API_BASE_URL: https://api.shineeducationbali.test/api/v2
+      API_SERVER_URL: http://api:8000/api/v2
       WATCHPACK_POLLING: "true"
     command:
       [
@@ -102,6 +106,7 @@ services:
         "-lc",
         "npm install && npm run dev -- --webpack --hostname 0.0.0.0 --port 3000",
       ]
+
     expose:
       - "3000"
     depends_on:
@@ -113,14 +118,17 @@ services:
     working_dir: /app
     volumes:
       - ../landing-shineedu:/app
+      - /app/.next
+      - /app/node_modules
     environment:
       NEXT_PUBLIC_API_BASE_URL: https://api.shineeducationbali.test/api/v2
+      API_SERVER_URL: http://api:8000/api/v2
       WATCHPACK_POLLING: "true"
     command:
       [
         "sh",
         "-lc",
-        "npm install && npm run dev -- --hostname 0.0.0.0 --port 3001",
+        "npm install && npm run dev -- --webpack --hostname 0.0.0.0 --port 3001",
       ]
     expose:
       - "3001"

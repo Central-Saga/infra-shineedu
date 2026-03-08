@@ -34,3 +34,39 @@ api-route-clear:
 app-bundle:
 	docker compose -f docker-compose.dev.yml run --rm app sh -lc "npm run build:bundle"
 
+# --- PODMAN COMMANDS ---
+podman-dev-up:
+	podman compose -f docker-compose.dev.yml up --build
+
+podman-dev-down:
+	podman compose -f docker-compose.dev.yml down -v
+
+podman-dev-logs:
+	podman compose -f docker-compose.dev.yml logs -f --tail=200
+
+podman-api-sh:
+	podman compose -f docker-compose.dev.yml exec api sh
+
+podman-api-install:
+	podman compose -f docker-compose.dev.yml exec api sh -lc "composer install"
+
+podman-api-composer:
+	podman compose -f docker-compose.dev.yml run --rm api sh -lc "composer install"
+
+podman-api-migrate:
+	podman compose -f docker-compose.dev.yml exec api sh -lc "php artisan migrate"
+
+podman-api-clear:
+	podman compose -f docker-compose.dev.yml exec api sh -lc "php artisan optimize:clear"
+
+podman-api-route-clear:
+	podman compose -f docker-compose.dev.yml exec api sh -lc "php artisan route:clear"
+
+podman-app-bundle:
+	podman compose -f docker-compose.dev.yml run --rm app sh -lc "npm run build:bundle"
+
+# Mengizinkan Podman menggunakan port 80 dan 443 (Direkomendasikan)
+sudo sysctl net.ipv4.ip_unprivileged_port_start=80
+
+cd /mnt/c/infra-shineedu
+export PODMAN_COMPOSE_PROVIDER=podman-compose
